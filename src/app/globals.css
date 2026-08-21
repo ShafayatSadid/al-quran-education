@@ -1,2 +1,303 @@
-@import "tailwindcss";
-@import "@heroui/styles"; 
+/* =============================================
+   Al-Quran Education Platform - Global Styles
+   Tailwind v4 + HeroUI Optimized
+   ============================================= */
+
+
+/* =================================================
+   Tailwind Theme
+   ================================================= */
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-light: var(--secondary-light);
+
+  --color-content: var(--text-primary);
+  --color-content-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+
+  --color-surface: var(--bg-primary);
+  --color-surface-secondary: var(--bg-secondary);
+  --color-card: var(--bg-card);
+
+  --color-border: var(--border);
+
+  --color-success: var(--success);
+  --color-error: var(--error);
+}
+
+
+/* =================================================
+   Light Theme
+   ================================================= */
+
+:root {
+  /* Primary */
+  --primary: #0A5C36;
+  --primary-hover: #084529;
+  --primary-light: #E8F5E9;
+
+  /* Secondary / Gold */
+  --secondary: #C9A84C;
+  --secondary-hover: #B8923E;
+  --secondary-light: #FDF7E3;
+
+  /* Text */
+  --text-primary: #1A1A2E;
+  --text-secondary: #4A4A5E;
+  --text-muted: #8888A0;
+
+  /* Background */
+  --bg-primary: #FCF9F2;
+  --bg-secondary: #F3F0E8;
+  --bg-card: #FFFFFF;
+
+  /* UI */
+  --border: #D4C9B8;
+
+  /* Status */
+  --success: #2E7D32;
+  --error: #B71C1C;
+}
+
+
+/* =================================================
+   Dark Theme
+   ================================================= */
+
+.dark {
+  /* Primary */
+  --primary: #0E7C46;
+  --primary-hover: #12965A;
+  --primary-light: #1A3A2A;
+
+  /* Secondary / Gold */
+  --secondary: #C9A84C;
+  --secondary-hover: #DDBE5A;
+  --secondary-light: #2F2818;
+
+  /* Text */
+  --text-primary: #EDF2F7;
+  --text-secondary: #A8B8C8;
+  --text-muted: #8293A3;
+
+  /* Background */
+  --bg-primary: #0E1419;
+  --bg-secondary: #19232E;
+  --bg-card: #232E3A;
+
+  /* UI */
+  --border: #2E3C4A;
+
+  /* Status */
+  --success: #2E7D32;
+  --error: #D32F2F;
+}
+
+
+/* =================================================
+   Base Styles
+   ================================================= */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+
+    font-family:
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+
+    line-height: 1.6;
+
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+
+  /* ---------------------------------------------
+     Headings
+     --------------------------------------------- */
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+
+  /* ---------------------------------------------
+     Native Links
+     HeroUI links are not affected
+     --------------------------------------------- */
+
+  a:not([class]) {
+    color: var(--primary);
+    transition: color 0.2s ease;
+  }
+
+  a:not([class]):hover {
+    color: var(--primary-hover);
+  }
+
+
+  /* ---------------------------------------------
+     Scrollbar
+     --------------------------------------------- */
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+  }
+
+
+  /* ---------------------------------------------
+     Text Selection
+     --------------------------------------------- */
+
+  ::selection {
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+}
+
+
+/* =================================================
+   Custom UI Utilities
+   ================================================= */
+
+@layer utilities {
+
+  /* ---------------------------------------------
+     Custom Card
+     Use when you don't want HeroUI Card
+     --------------------------------------------- */
+
+  .card {
+    background-color: var(--bg-card);
+
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+
+    padding: 1.5rem;
+
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .dark .card {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+
+
+  /* ---------------------------------------------
+     Custom Primary Button
+     --------------------------------------------- */
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: #ffffff;
+
+    padding: 0.6rem 1.5rem;
+
+    border: none;
+    border-radius: 9999px;
+
+    font-weight: 600;
+
+    transition:
+      background-color 0.25s ease,
+      transform 0.1s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-hover);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+
+
+  /* ---------------------------------------------
+     Custom Secondary Button
+     --------------------------------------------- */
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--primary);
+
+    border: 2px solid var(--primary);
+    border-radius: 9999px;
+
+    padding: 0.6rem 1.5rem;
+
+    font-weight: 600;
+
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--primary);
+    color: #ffffff;
+  }
+
+
+  /* ---------------------------------------------
+     Muted Text
+     --------------------------------------------- */
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+
+  /* ---------------------------------------------
+     Accessible Focus Ring
+     --------------------------------------------- */
+
+  *:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+}

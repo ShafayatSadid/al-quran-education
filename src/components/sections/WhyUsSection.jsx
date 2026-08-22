@@ -67,7 +67,7 @@ export function WhyUsSection() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group relative rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 lg:p-8"
+              className="group relative rounded-2xl border border-border bg-card/80 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 lg:p-8"
             >
               {/* ডেকোরেটিভ গোল্ডেন ডট (ডান কোণায়) */}
               <div className="absolute right-4 top-4 h-12 w-12 rounded-full border border-accent/10 transition-colors group-hover:border-accent/30" />

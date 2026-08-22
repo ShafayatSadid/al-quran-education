@@ -1,303 +1,124 @@
 /* =============================================
-   Al-Quran Education Platform - Global Styles
-   Tailwind v4 + HeroUI Optimized
+   Al Quran Education Theme v1.0.0
    ============================================= */
 
+@import "tailwindcss";
+@import "@heroui/styles";
 
-/* =================================================
-   Tailwind Theme
-   ================================================= */
 
+/* ===== লাইট থিম (ডিফল্ট) ===== */
+:root {
+  /* ব্যাকগ্রাউন্ড ও টেক্সট */
+  --background: #FEFCE8;        /* ক্রিমি অফ-হোয়াইট */
+  --foreground: #1F2937;        /* গাঢ় ধূসর (পড়তে আরাম) */
+
+  /* প্রাইমারি কালার (পান্না সবুজ) */
+  --primary: #065F46;           /* ডিপ এমারাল্ড */
+  --primary-light: #047857;
+  --primary-foreground: #FFFFFF;
+
+  /* সেকেন্ডারি (গাঢ় ধূসর) */
+  --secondary: #1F2937;
+  --secondary-foreground: #FFFFFF;
+
+  /* অ্যাকসেন্ট কালার (সোনালি/অ্যাম্বার) */
+  --accent: #D97706;
+  --accent-light: #F59E0B;
+  --accent-foreground: #FFFFFF;
+
+  /* কার্ড ও বর্ডার */
+  --card: #FFFFFF;
+  --card-foreground: #1F2937;
+  --border: #E5E7EB;
+
+  /* স্ট্যাটাস */
+  --success: #16A34A;
+  --error: #DC2626;
+
+  /* শ্যাডো (মিনিমালিস্ট) */
+  --shadow-subtle: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== ডার্ক থিম ===== */
+.dark {
+  --background: #111827;        /* গাঢ় স্লেট/গ্রে */
+  --foreground: #F9FAFB;        /* হালকা ধূসর */
+
+  --primary: #34D399;           /* ডার্ক মোডে হালকা সবুজ (চোখে আরাম) */
+  --primary-light: #6EE7B7;
+  --primary-foreground: #111827;
+
+  --secondary: #9CA3AF;
+  --secondary-foreground: #111827;
+
+  --accent: #FBBF24;            /* ডার্কে উজ্জ্বল সোনালি */
+  --accent-light: #FCD34D;
+  --accent-foreground: #111827;
+
+  --card: #1F2937;
+  --card-foreground: #F9FAFB;
+  --border: #374151;
+
+  --success: #22C55E;
+  --error: #EF4444;
+
+  --shadow-subtle: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Tailwind v4-এর জন্য কালার ভেরিয়েবল রেজিস্টার ===== */
 @theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
   --color-primary: var(--primary);
-  --color-primary-hover: var(--primary-hover);
   --color-primary-light: var(--primary-light);
+  --color-primary-foreground: var(--primary-foreground);
 
   --color-secondary: var(--secondary);
-  --color-secondary-hover: var(--secondary-hover);
-  --color-secondary-light: var(--secondary-light);
+  --color-secondary-foreground: var(--secondary-foreground);
 
-  --color-content: var(--text-primary);
-  --color-content-secondary: var(--text-secondary);
-  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-foreground: var(--accent-foreground);
 
-  --color-surface: var(--bg-primary);
-  --color-surface-secondary: var(--bg-secondary);
-  --color-card: var(--bg-card);
-
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
   --color-border: var(--border);
 
   --color-success: var(--success);
   --color-error: var(--error);
+
+  --shadow-subtle: var(--shadow-subtle);
 }
 
-
-/* =================================================
-   Light Theme
-   ================================================= */
-
-:root {
-  /* Primary */
-  --primary: #0A5C36;
-  --primary-hover: #084529;
-  --primary-light: #E8F5E9;
-
-  /* Secondary / Gold */
-  --secondary: #C9A84C;
-  --secondary-hover: #B8923E;
-  --secondary-light: #FDF7E3;
-
-  /* Text */
-  --text-primary: #1A1A2E;
-  --text-secondary: #4A4A5E;
-  --text-muted: #8888A0;
-
-  /* Background */
-  --bg-primary: #FCF9F2;
-  --bg-secondary: #F3F0E8;
-  --bg-card: #FFFFFF;
-
-  /* UI */
-  --border: #D4C9B8;
-
-  /* Status */
-  --success: #2E7D32;
-  --error: #B71C1C;
+/* ===== গ্লোবাল বেস স্টাইল ===== */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-bengali), "Noto Sans Bengali", "Hind Siliguri", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-/* =================================================
-   Dark Theme
-   ================================================= */
-
-.dark {
-  /* Primary */
-  --primary: #0E7C46;
-  --primary-hover: #12965A;
-  --primary-light: #1A3A2A;
-
-  /* Secondary / Gold */
-  --secondary: #C9A84C;
-  --secondary-hover: #DDBE5A;
-  --secondary-light: #2F2818;
-
-  /* Text */
-  --text-primary: #EDF2F7;
-  --text-secondary: #A8B8C8;
-  --text-muted: #8293A3;
-
-  /* Background */
-  --bg-primary: #0E1419;
-  --bg-secondary: #19232E;
-  --bg-card: #232E3A;
-
-  /* UI */
-  --border: #2E3C4A;
-
-  /* Status */
-  --success: #2E7D32;
-  --error: #D32F2F;
+/* স্ক্রলবার */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-
-/* =================================================
-   Base Styles
-   ================================================= */
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-
-    font-family:
-      system-ui,
-      -apple-system,
-      "Segoe UI",
-      Roboto,
-      sans-serif;
-
-    line-height: 1.6;
-
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-
-  /* ---------------------------------------------
-     Headings
-     --------------------------------------------- */
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: var(--text-primary);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-
-  /* ---------------------------------------------
-     Native Links
-     HeroUI links are not affected
-     --------------------------------------------- */
-
-  a:not([class]) {
-    color: var(--primary);
-    transition: color 0.2s ease;
-  }
-
-  a:not([class]):hover {
-    color: var(--primary-hover);
-  }
-
-
-  /* ---------------------------------------------
-     Scrollbar
-     --------------------------------------------- */
-
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-    border-radius: 8px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 8px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--secondary);
-  }
-
-
-  /* ---------------------------------------------
-     Text Selection
-     --------------------------------------------- */
-
-  ::selection {
-    background: var(--primary-light);
-    color: var(--primary);
-  }
+::-webkit-scrollbar-track {
+  background: var(--background);
 }
 
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 9999px;
+}
 
-/* =================================================
-   Custom UI Utilities
-   ================================================= */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
 
-@layer utilities {
-
-  /* ---------------------------------------------
-     Custom Card
-     Use when you don't want HeroUI Card
-     --------------------------------------------- */
-
-  .card {
-    background-color: var(--bg-card);
-
-    border: 1px solid var(--border);
-    border-radius: 0.75rem;
-
-    padding: 1.5rem;
-
-    transition:
-      background-color 0.3s ease,
-      border-color 0.3s ease;
-  }
-
-  .dark .card {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  }
-
-
-  /* ---------------------------------------------
-     Custom Primary Button
-     --------------------------------------------- */
-
-  .btn-primary {
-    background-color: var(--primary);
-    color: #ffffff;
-
-    padding: 0.6rem 1.5rem;
-
-    border: none;
-    border-radius: 9999px;
-
-    font-weight: 600;
-
-    transition:
-      background-color 0.25s ease,
-      transform 0.1s ease;
-  }
-
-  .btn-primary:hover {
-    background-color: var(--primary-hover);
-  }
-
-  .btn-primary:active {
-    transform: scale(0.97);
-  }
-
-
-  /* ---------------------------------------------
-     Custom Secondary Button
-     --------------------------------------------- */
-
-  .btn-secondary {
-    background-color: transparent;
-    color: var(--primary);
-
-    border: 2px solid var(--primary);
-    border-radius: 9999px;
-
-    padding: 0.6rem 1.5rem;
-
-    font-weight: 600;
-
-    transition:
-      background-color 0.25s ease,
-      color 0.25s ease,
-      border-color 0.25s ease;
-  }
-
-  .btn-secondary:hover {
-    background-color: var(--primary);
-    color: #ffffff;
-  }
-
-
-  /* ---------------------------------------------
-     Muted Text
-     --------------------------------------------- */
-
-  .text-muted {
-    color: var(--text-muted);
-  }
-
-
-  /* ---------------------------------------------
-     Accessible Focus Ring
-     --------------------------------------------- */
-
-  *:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-    border-radius: 0.25rem;
-  }
+/* টেক্সট সিলেকশন */
+::selection {
+  background: var(--primary);
+  color: white;
 }

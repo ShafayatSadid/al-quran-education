@@ -1,5 +1,6 @@
 import { CoursesSection } from "@/components/sections/CoursesSection";
 import { Hero } from "@/components/sections/Hero";
+import { TeachersSection } from "@/components/sections/TeachersSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { WhyUsSection } from "@/components/sections/WhyUsSection";
 
@@ -14,11 +15,15 @@ export default function Home() {
       </section>
 
       <section>
-        <CoursesSection/>
+        <CoursesSection />
       </section>
 
       <section>
-        <TestimonialsSection/>
+        <TeachersSection />
+      </section>
+      
+      <section>
+        <TestimonialsSection />
       </section>
     </section>
   );

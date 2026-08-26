@@ -1,22 +1,29 @@
+// components/shared/NavBar.jsx
 "use client";
 
 import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
-import { Button } from "@heroui/react";
+import { Avatar, Button, Dropdown, Label, Skeleton } from "@heroui/react";
+import { ArrowRightFromSquare, Gear, Persons } from "@gravity-ui/icons";
+import { useRouter } from "next/navigation";
 
 import { ThemeSwitch } from "./ThemeSwitch";
 import { FreeClass } from "./FreeClass";
-
+import { authClient } from "@/lib/auth-client";
 
 const NavBar = () => {
     const sideMenuRef = useRef(null);
-    const [burger, setBurger] = useState(true)
+    const [burger, setBurger] = useState(true);
+    const router = useRouter();
+
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
 
     const openMenu = () => {
         if (sideMenuRef.current) {
-            setBurger(false)
+            setBurger(false);
             sideMenuRef.current.style.transform = "translateX(0)";
         }
     };
@@ -24,10 +31,14 @@ const NavBar = () => {
     const closeMenu = () => {
         if (sideMenuRef.current) {
             sideMenuRef.current.style.transform = "translateX(-100%)";
-            setBurger(true)
+            setBurger(true);
         }
     };
 
+    const handleSignOut = async () => {
+        await authClient.signOut();
+        router.push("/");
+    };
 
     return (
         <nav className="w-full mx-auto fixed px-5 lg:px-8 py-4 flex justify-between items-center z-50 bg-background/80 backdrop-blur-md shadow-sm transition-colors duration-300">
@@ -91,7 +102,7 @@ const NavBar = () => {
                     </Link>
                 </li>
                 <li className="mt-6">
-                    <div onClick={closeMenu}><FreeClass/> </div>                  
+                    <div onClick={closeMenu}><FreeClass /> </div>
                 </li>
             </ul>
 
@@ -144,10 +155,87 @@ const NavBar = () => {
                 </li>
             </ul>
 
-            {/* Right Side: Theme Toggle + CTA */}
+            {/* Right Side: Theme Toggle + CTA + Admin Profile */}
             <div className="flex items-center gap-4">
                 <ThemeSwitch />
                 <div className="hidden md:block"><FreeClass /></div>
+
+                {/* ✅ অ্যাডমিন প্রোফাইল ড্রপডাউন (শুধুমাত্র লগইন থাকলে দেখাবে) */}
+                {user ? (
+                    <Dropdown>
+                        <Dropdown.Trigger className="rounded-full cursor-pointer">
+                            <Avatar size="md">
+                                <Avatar.Image alt={user?.name} src={user?.image} />
+                                <Avatar.Fallback delayMs={600}>
+                                    {user?.name?.slice(0, 2).toUpperCase()}
+                                </Avatar.Fallback>
+                            </Avatar>
+                        </Dropdown.Trigger>
+
+                        <Dropdown.Popover className="bg-card border border-border shadow-2xl rounded-2xl p-0 min-w-[220px]">
+                            {/* User Info Header */}
+                            <div className="px-4 pt-4 pb-3 border-b border-border">
+                                <div className="flex items-center gap-3">
+                                    <Avatar size="sm">
+                                        <Avatar.Image alt={user?.name} src={user?.image} />
+                                        <Avatar.Fallback delayMs={600}>
+                                            {user?.name?.slice(0, 2).toUpperCase()}
+                                        </Avatar.Fallback>
+                                    </Avatar>
+                                    <div className="flex flex-col">
+                                        <p className="font-heading text-sm font-semibold text-foreground leading-5">
+                                            {user?.name}
+                                        </p>
+                                        <p className="font-body text-xs text-muted leading-4 truncate max-w-[140px]">
+                                            {user?.email}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item
+                                    id="dashboard"
+                                    textValue="Dashboard"
+                                    href="/admin/dashboard"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <Persons className="size-4 text-muted" />
+                                        <Label className="text-foreground">ড্যাশবোর্ড</Label>
+                                    </div>
+                                </Dropdown.Item>
+
+                                <Dropdown.Item
+                                    id="profile"
+                                    textValue="Profile"
+                                    href="/admin/profile"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <Gear className="size-4 text-muted" />
+                                        <Label className="text-foreground">প্রোফাইল</Label>
+                                    </div>
+                                </Dropdown.Item>
+
+                                <Dropdown.Item
+                                    id="logout"
+                                    textValue="Logout"
+                                    variant="danger"
+                                    className="mt-1 border-t border-border pt-2"
+                                >
+                                    <div
+                                        onClick={handleSignOut}
+                                        className="flex w-full items-center justify-between gap-2"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <ArrowRightFromSquare className="size-4 text-error" />
+                                            <Label className="text-error">লগআউট</Label>
+                                        </div>
+                                    </div>
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown.Popover>
+                    </Dropdown>
+                ) : <></>}
             </div>
         </nav>
     );

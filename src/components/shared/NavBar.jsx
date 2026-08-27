@@ -41,7 +41,7 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="w-full mx-auto fixed px-5 lg:px-8 py-4 flex justify-between items-center z-50 bg-background/80 backdrop-blur-md shadow-sm transition-colors duration-300">
+        <nav className="w-full mx-auto fixed px-5 lg:px-8 py-4 flex justify-between items-center z-20 border-b border-accent/50 bg-background/80 backdrop-blur-md shadow-sm transition-colors duration-300">
 
             {/* Mobile Menu Icon */}
             <div className="md:hidden">
@@ -197,7 +197,7 @@ const NavBar = () => {
                                 <Dropdown.Item
                                     id="dashboard"
                                     textValue="Dashboard"
-                                    href="/admin/dashboard"
+                                    href="/dashboard"
                                 >
                                     <div className="flex items-center gap-3">
                                         <Persons className="size-4 text-muted" />
@@ -208,7 +208,7 @@ const NavBar = () => {
                                 <Dropdown.Item
                                     id="profile"
                                     textValue="Profile"
-                                    href="/admin/profile"
+                                    href="/profile"
                                 >
                                     <div className="flex items-center gap-3">
                                         <Gear className="size-4 text-muted" />

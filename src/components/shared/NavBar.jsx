@@ -41,7 +41,7 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="w-full mx-auto fixed px-5 lg:px-8 py-4 flex justify-between items-center z-20 border-b border-accent/50 bg-background/80 backdrop-blur-md shadow-sm transition-colors duration-300">
+        <nav className="w-full mx-auto fixed px-5 lg:px-8 py-4 flex justify-between items-center z-20 border-b border-accent/20 bg-background/80 backdrop-blur-md shadow-sm transition-colors duration-300">
 
             {/* Mobile Menu Icon */}
             <div className="md:hidden">

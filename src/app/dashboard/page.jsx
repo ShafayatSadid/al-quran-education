@@ -59,7 +59,7 @@ export default function AdminDashboardHome() {
           const Icon = action.icon;
           return (
             <Link key={action.title} href={action.href}>
-              <div className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg transition hover:-translate-y-1 cursor-pointer group">
+              <div className="bg-card/50 border border-border rounded-2xl p-6 text-center hover:shadow-lg transition hover:-translate-y-1 cursor-pointer group">
                 <div className={`w-12 h-12 rounded-full ${action.bg} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition`}>
                   <Icon className={`text-2xl ${action.iconColor}`} />
                 </div>

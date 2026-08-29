@@ -19,7 +19,7 @@ export default function RegisterPage() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        
+
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries());
         console.log('user:', user);
@@ -35,7 +35,7 @@ export default function RegisterPage() {
 
             if (data) {
                 toast.success("অ্যাকাউন্ট তৈরি হয়েছে!");
-                router.push("/");
+                router.push("/login");
                 return;
             }
 

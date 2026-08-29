@@ -31,7 +31,7 @@ export default function LoginPage() {
 
       if (data) {
         toast.success("স্বাগতম!");
-        router.push("/admin/dashboard");
+        router.push("/dashboard");
         return;
       }
 

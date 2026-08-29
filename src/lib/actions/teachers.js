@@ -1,12 +1,16 @@
 'use server'
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+import { authClient } from "../auth-client";
 
-export const addTeacher = async (newTeacher) => {
-    const res = await fetch(`${baseURL}/teachers`, {
+const BACKEND_URL = process.env.BACKEND_URL;
+
+export const addTeacher = async (newTeacher, token) => {
+    
+    const res = await fetch(`${BACKEND_URL}/teachers`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
+            Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(newTeacher)
     })

@@ -13,6 +13,7 @@ import {
   MdClose
 } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
+import { BsLayoutSidebar } from "react-icons/bs";
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
@@ -45,7 +46,7 @@ export default function DashboardLayout({ children }) {
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className="text-foreground hover:text-primary transition"
         >
-          {isSidebarOpen ? <MdClose size={22} /> : <MdMenu size={22} />}
+          {isSidebarOpen ? <MdClose size={22} /> : <BsLayoutSidebar size={22} />}
         </button>
       </div>
 
@@ -60,7 +61,7 @@ export default function DashboardLayout({ children }) {
           bg-card
           border-r border-border
           p-6
-          z-40
+          z-20
           transition-transform duration-300
           flex flex-col
           shadow-2xl md:shadow-none

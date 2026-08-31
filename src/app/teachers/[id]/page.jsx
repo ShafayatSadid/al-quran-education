@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Spinner } from "@heroui/react";
+import { Button, Spinner } from "@heroui/react";
 import {
     MdArrowBack,
     MdStar,
@@ -18,7 +18,7 @@ import {
 } from "react-icons/md";
 import { FaUserGraduate, FaChalkboardTeacher } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { FreeClass } from "@/components/shared/FreeClass";
+
 
 export default function TeacherDetailsPage() {
     const router = useRouter();
@@ -218,7 +218,11 @@ export default function TeacherDetailsPage() {
                                 </button>
                             </Link>
                             <div className="w-full sm:w-auto">
-                                <FreeClass />
+                                <Link href={'/free-class'}>
+                                    <Button className="bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-5 py-2.5 rounded-full shadow-md transition-all duration-200 hover:scale-105">
+                                        ফ্রি ক্লাস নিন
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-
+// app/dashboard/reviews/[id]/edit/page.jsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -26,7 +26,7 @@ export default function EditReviewPage() {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
-  const [formData, setFormData] = useState({
+  const [initialData, setInitialData] = useState({
     studentName: "",
     role: "",
     rating: "5",
@@ -42,7 +42,7 @@ export default function EditReviewPage() {
         if (!res.ok) throw new Error("রিভিউ খুঁজে পাওয়া যায়নি");
         const data = await res.json();
 
-        setFormData({
+        setInitialData({
           studentName: data.studentName || "",
           role: data.role || "",
           rating: data.rating?.toString() || "5",
@@ -66,12 +66,15 @@ export default function EditReviewPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formDataObj = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formDataObj.entries());
+
     const reviewData = {
-      studentName: formData.studentName,
-      role: formData.role,
-      rating: parseInt(formData.rating),
-      comment: formData.comment,
-      date: formData.date,
+      studentName: data.studentName,
+      role: data.role,
+      rating: parseInt(data.rating),
+      comment: data.comment,
+      date: data.date,
     };
 
     if (!reviewData.studentName.trim()) {
@@ -86,13 +89,13 @@ export default function EditReviewPage() {
     setLoading(true);
 
     try {
-      const { data, error } = await authClient.token();
+      const { data: tokenData, error } = await authClient.token();
       if (error) {
         toast.error("অথেনটিকেশন সমস্যা: লগইন করুন");
         setLoading(false);
         return;
       }
-      const token = data?.token;
+      const token = tokenData?.token;
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${id}`, {
         method: "PATCH",
@@ -151,7 +154,7 @@ export default function EditReviewPage() {
           <TextField
             isRequired
             name="studentName"
-            defaultValue={formData.studentName}
+            defaultValue={initialData.studentName}
             validate={(value) => {
               if (!value || value.trim().length === 0) return "শিক্ষার্থীর নাম আবশ্যক";
               return null;
@@ -168,7 +171,7 @@ export default function EditReviewPage() {
           {/* role */}
           <TextField
             name="role"
-            defaultValue={formData.role}
+            defaultValue={initialData.role}
           >
             <Label className="text-sm font-medium text-foreground">
               ভূমিকা <span className="text-muted font-normal">(ঐচ্ছিক)</span>
@@ -186,8 +189,8 @@ export default function EditReviewPage() {
                 রেটিং
               </Label>
               <select
-                defaultValue={formData.rating}
-                onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+                name="rating"
+                defaultValue={initialData.rating}
                 className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
               >
                 <option value="1">⭐ ১</option>
@@ -201,7 +204,7 @@ export default function EditReviewPage() {
             <TextField
               isRequired
               name="date"
-              defaultValue={formData.date}
+              defaultValue={initialData.date}
               validate={(value) => {
                 if (!value) return "তারিখ আবশ্যক";
                 return null;
@@ -220,7 +223,7 @@ export default function EditReviewPage() {
           <TextField
             isRequired
             name="comment"
-            defaultValue={formData.comment}
+            defaultValue={initialData.comment}
             validate={(value) => {
               if (!value || value.trim().length === 0) return "মন্তব্য আবশ্যক";
               if (value.trim().length < 10) return "মন্তব্য কমপক্ষে ১০ অক্ষর হতে হবে";

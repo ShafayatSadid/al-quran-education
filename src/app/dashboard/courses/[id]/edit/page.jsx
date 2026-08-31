@@ -156,7 +156,7 @@ export default function EditCoursePage() {
           <TextField
             isRequired
             name="title"
-            value={formData.title}
+            defaultValue={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             validate={(value) => {
               if (!value || value.trim().length === 0) return "শিরোনাম আবশ্যক";
@@ -176,7 +176,7 @@ export default function EditCoursePage() {
           <TextField
             isRequired
             name="description"
-            value={formData.description}
+            defaultValue={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             validate={(value) => {
               if (!value || value.trim().length === 0) return "বিবরণ আবশ্যক";
@@ -199,7 +199,7 @@ export default function EditCoursePage() {
             <TextField
               isRequired
               name="duration"
-              value={formData.duration}
+              defaultValue={formData.duration}
               onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
               validate={(value) => {
                 if (!value || value.trim().length === 0) return "সময়কাল আবশ্যক";
@@ -217,7 +217,7 @@ export default function EditCoursePage() {
             <TextField
               isRequired
               name="students"
-              value={formData.students}
+              defaultValue={formData.students}
               onChange={(e) => setFormData({ ...formData, students: e.target.value })}
               validate={(value) => {
                 if (!value) return "শিক্ষার্থী সংখ্যা আবশ্যক";

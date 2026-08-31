@@ -10,7 +10,7 @@ import { ArrowRightFromSquare, Gear, Persons } from "@gravity-ui/icons";
 import { useRouter } from "next/navigation";
 
 import { ThemeSwitch } from "./ThemeSwitch";
-import { FreeClass } from "./FreeClass";
+
 import { authClient } from "@/lib/auth-client";
 
 const NavBar = () => {
@@ -102,7 +102,11 @@ const NavBar = () => {
                     </Link>
                 </li>
                 <li className="mt-6">
-                    <div onClick={closeMenu}><FreeClass /> </div>
+                    <Link href={'/free-class'}>
+                        <Button className="bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-5 py-2.5 rounded-full shadow-md transition-all duration-200 hover:scale-105">
+                            ফ্রি ক্লাস নিন
+                        </Button>
+                    </Link>
                 </li>
             </ul>
 
@@ -158,7 +162,13 @@ const NavBar = () => {
             {/* Right Side: Theme Toggle + CTA + Admin Profile */}
             <div className="flex items-center gap-4">
                 {/* <ThemeSwitch /> */}
-                <div className="hidden md:block"><FreeClass /></div>
+                <div className="hidden md:block">
+                    <Link href={'/free-class'}>
+                        <Button className="bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-5 py-2.5 rounded-full shadow-md transition-all duration-200 hover:scale-105">
+                            ফ্রি ক্লাস নিন
+                        </Button>
+                    </Link> 
+                    </div>
 
                 {/* ✅ অ্যাডমিন প্রোফাইল ড্রপডাউন (শুধুমাত্র লগইন থাকলে দেখাবে) */}
                 {user ? (
@@ -202,17 +212,6 @@ const NavBar = () => {
                                     <div className="flex items-center gap-3">
                                         <Persons className="size-4 text-muted" />
                                         <Label className="text-foreground">ড্যাশবোর্ড</Label>
-                                    </div>
-                                </Dropdown.Item>
-
-                                <Dropdown.Item
-                                    id="profile"
-                                    textValue="Profile"
-                                    href="/profile"
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <Gear className="size-4 text-muted" />
-                                        <Label className="text-foreground">প্রোফাইল</Label>
                                     </div>
                                 </Dropdown.Item>
 

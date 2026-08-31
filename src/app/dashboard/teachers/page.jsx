@@ -46,25 +46,7 @@ export default function TeachersPage() {
     getTeachers();
   }, []);
 
-  // ডিলিট ফাংশন
-  // const handleDelete = async (id) => {
-  //   const { data, error } = await authClient.token();
-  //   const token = data?.token;
-  //   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teachers/${id}`, {
-  //     method: 'DELETE',
-  //     headers:{
-  //       Authorization: `Bearer ${token}`
-  //     }
-  //   })
-  //   const result = await res.json()
-
-  //   console.log('result:', result);
-
-  //   if (result.deletedCount > 0) {
-  //     toast.success('delete success')
-  //     router.refresh();
-  //   }
-  // };
+ 
 
   // লোডিং স্টেট
   if (loading) {
@@ -119,10 +101,10 @@ export default function TeachersPage() {
               <div className="flex items-center gap-4">
                 {/* ✅ HeroUI Avatar */}
                 <Avatar>
-                  <Avatar.Image
+                  {/* <Avatar.Image
                     alt={teacher.name}
                     src={teacher.image || undefined}
-                  />
+                  /> */}
                   <Avatar.Fallback className="bg-primary/10 text-primary font-heading font-bold text-xl">
                     {teacher.name?.charAt(0) || "?"}
                   </Avatar.Fallback>
@@ -162,18 +144,10 @@ export default function TeachersPage() {
 
               {/* ===== অ্যাকশন বাটন ===== */}
               <div className="mt-4 pt-4 border-t border-border flex items-center justify-end gap-2">
-                {/* বিস্তারিত (Details) */}
-                <Link href={`/teachers/${teacher._id}`}>
-                  <button
-                    className="p-2 rounded-lg text-muted hover:text-accent hover:bg-accent/10 transition-all"
-                    title="বিস্তারিত দেখুন"
-                  >
-                    <MdVisibility className="size-5" />
-                  </button>
-                </Link>
+                
 
                 {/* এডিট */}
-                <Link href={`/dashboard/teachers/${teacher._id}/edit`}>
+                <Link href={`/dashboard/teachers/${teacher._id}`}>
                   <button
                     className="p-2 rounded-lg text-muted hover:text-primary hover:bg-primary/10 transition-all"
                     title="সম্পাদনা করুন"
@@ -184,13 +158,7 @@ export default function TeachersPage() {
 
                 {/* ডিলিট */}
                 <DeleteButton name={teacher.name} id={teacher._id} endpoint={"teachers"}/>
-                {/* <button
-                  onClick={() => handleDelete(teacher._id)}
-                  className="p-2 rounded-lg text-muted hover:text-error hover:bg-error/10 transition-all"
-                  title="ডিলিট করুন"
-                >
-                  <MdDelete className="size-5" />
-                </button> */}
+                
               </div>
             </div>
           ))}

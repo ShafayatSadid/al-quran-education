@@ -35,7 +35,7 @@ export default function RegisterPage() {
 
             if (data) {
                 toast.success("অ্যাকাউন্ট তৈরি হয়েছে!");
-                router.push("/login");
+                router.push("/");
                 return;
             }
 

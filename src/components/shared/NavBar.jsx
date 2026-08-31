@@ -157,7 +157,7 @@ const NavBar = () => {
 
             {/* Right Side: Theme Toggle + CTA + Admin Profile */}
             <div className="flex items-center gap-4">
-                <ThemeSwitch />
+                {/* <ThemeSwitch /> */}
                 <div className="hidden md:block"><FreeClass /></div>
 
                 {/* ✅ অ্যাডমিন প্রোফাইল ড্রপডাউন (শুধুমাত্র লগইন থাকলে দেখাবে) */}

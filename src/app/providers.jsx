@@ -1,4 +1,4 @@
-// app/providers.tsx
+
 "use client";
 
 import { ThemeProvider } from "next-themes";

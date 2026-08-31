@@ -19,7 +19,8 @@ import {
   MdArrowBack,
   MdSave,
   MdClose,
-  MdCloudUpload
+  MdCloudUpload,
+  MdStar
 } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -39,6 +40,7 @@ export default function AddTeacherPage() {
     status: "active",
     students: "",
     joined: "",
+    rating: "",
   });
 
   const [imageUrl, setImageUrl] = useLocalStorage("teacherImageUrl", "");
@@ -54,10 +56,10 @@ export default function AddTeacherPage() {
     e.preventDefault();
     const { data, error } = await authClient.token();
     const token = data?.token;
-    // const formDataObj = new FormData(e.currentTarget);
-    // const teacher = Object.fromEntries(formDataObj.entries());
     const teacher = { ...formData };
 
+    // rating কে নাম্বারে কনভার্ট
+    teacher.rating = parseFloat(teacher.rating) || 0;
 
     setLoading(true);
 
@@ -272,8 +274,9 @@ export default function AddTeacherPage() {
               </TextField>
             </div>
 
-            {/* students */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* students + joined + rating */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* student */}
               <TextField
                 isRequired
                 defaultValue={formData.students}
@@ -297,13 +300,13 @@ export default function AddTeacherPage() {
                 <FieldError className="text-xs text-error mt-1" />
               </TextField>
 
+              {/* join date */}
               <TextField
                 isRequired
                 defaultValue={formData.joined}
                 name="joined"
                 validate={(value) => {
                   if (!value) return "যোগদানের তারিখ আবশ্যক";
-                  // ISO তারিখ ফরম্যাট চেক (YYYY-MM-DD)
                   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return "সঠিক তারিখ ফরম্যাট দিন (YYYY-MM-DD)";
                   return null;
                 }}
@@ -314,6 +317,35 @@ export default function AddTeacherPage() {
                   type="date"
 
                   onChange={(e) => setFormData({ ...formData, joined: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                />
+                <FieldError className="text-xs text-error mt-1" />
+              </TextField>
+
+              {/* ⭐ rating */}
+              <TextField
+                isRequired
+                defaultValue={formData.rating}
+                name="rating"
+                validate={(value) => {
+                  if (!value) return "রেটিং আবশ্যক";
+                  const num = parseFloat(value);
+                  if (isNaN(num) || num < 1 || num > 5) return "রেটিং ১ থেকে ৫ এর মধ্যে হতে হবে";
+                  return null;
+                }}
+              >
+                <Label className="text-sm font-medium text-foreground flex items-center gap-1">
+                  <MdStar className="text-accent" />
+                  রেটিং
+                </Label>
+                <Input
+                  name="rating"
+                  type="number"
+                  step="0.1"
+                  min="1"
+                  max="5"
+                  onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+                  placeholder="৪.৮"
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
                 />
                 <FieldError className="text-xs text-error mt-1" />

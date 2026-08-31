@@ -152,7 +152,7 @@ export default function CoursesPage() {
                 </Link>
 
                 {/* এডিট */}
-                <Link href={`/dashboard/courses/${course._id || course.id}/edit`}>
+                <Link href={`/dashboard/courses/${course._id}`}>
                   <button
                     className="p-2 rounded-lg text-muted hover:text-primary hover:bg-primary/10 transition-all"
                     title="সম্পাদনা করুন"

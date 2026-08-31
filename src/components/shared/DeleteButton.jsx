@@ -36,7 +36,7 @@ const DeleteButton = ({
 
       if (data.deletedCount > 0) {
         toast.success(`${name || "আইটেম"} সফলভাবে ডিলিট করা হয়েছে!`);
-        router.push('/dashboard/teachers') // পেজ রিফ্রেশ না করেই ডেটা আপডেট
+        router.refresh()
       } else {
         toast.error("ডিলিট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
       }

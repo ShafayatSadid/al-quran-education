@@ -103,7 +103,7 @@ export default function AddTeacherPage() {
 
       <div className="flex items-center gap-4 mb-6">
         <Link
-          href="/admin/teachers"
+          href="/dashboard/teachers"
           className="p-2 rounded-lg text-muted hover:text-primary hover:bg-primary/10 transition-all"
         >
           <MdArrowBack className="size-6" />

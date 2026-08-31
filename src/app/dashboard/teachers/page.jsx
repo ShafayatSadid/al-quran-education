@@ -46,7 +46,7 @@ export default function TeachersPage() {
     getTeachers();
   }, []);
 
- 
+
 
   // লোডিং স্টেট
   if (loading) {
@@ -101,10 +101,7 @@ export default function TeachersPage() {
               <div className="flex items-center gap-4">
                 {/* ✅ HeroUI Avatar */}
                 <Avatar>
-                  {/* <Avatar.Image
-                    alt={teacher.name}
-                    src={teacher.image || undefined}
-                  /> */}
+
                   <Avatar.Fallback className="bg-primary/10 text-primary font-heading font-bold text-xl">
                     {teacher.name?.charAt(0) || "?"}
                   </Avatar.Fallback>
@@ -144,7 +141,15 @@ export default function TeachersPage() {
 
               {/* ===== অ্যাকশন বাটন ===== */}
               <div className="mt-4 pt-4 border-t border-border flex items-center justify-end gap-2">
-                
+                {/* বিস্তারিত */}
+                <Link href={`/teachers/${teacher._id}`}>
+                  <button
+                    className="p-2 rounded-lg text-muted hover:text-accent hover:bg-accent/10 transition-all"
+                    title="বিস্তারিত দেখুন"
+                  >
+                    <MdVisibility className="size-5" />
+                  </button>
+                </Link>
 
                 {/* এডিট */}
                 <Link href={`/dashboard/teachers/${teacher._id}`}>
@@ -157,8 +162,8 @@ export default function TeachersPage() {
                 </Link>
 
                 {/* ডিলিট */}
-                <DeleteButton name={teacher.name} id={teacher._id} endpoint={"teachers"}/>
-                
+                <DeleteButton name={teacher.name} id={teacher._id} endpoint={"teachers"} />
+
               </div>
             </div>
           ))}

@@ -141,16 +141,7 @@ export default function CoursesPage() {
 
               {/* ===== অ্যাকশন বাটন ===== */}
               <div className="mt-4 pt-4 border-t border-border flex items-center justify-end gap-2">
-                {/* বিস্তারিত */}
-                <Link href={`/courses/${course._id || course.id}`}>
-                  <button
-                    className="p-2 rounded-lg text-muted hover:text-accent hover:bg-accent/10 transition-all"
-                    title="বিস্তারিত দেখুন"
-                  >
-                    <MdVisibility className="size-5" />
-                  </button>
-                </Link>
-
+                
                 {/* এডিট */}
                 <Link href={`/dashboard/courses/${course._id}`}>
                   <button

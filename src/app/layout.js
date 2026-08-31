@@ -83,19 +83,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html
+      data-theme="dark"
       lang="bn"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${hindSiliguri.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${hindSiliguri.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-       
-          <Toaster />
-          <NavBar />
-          <main>
-            {children}
-          </main>
-          <Footer />
-        
+
+        <Toaster />
+        <NavBar />
+        <main>
+          {children}
+        </main>
+        <Footer />
+
       </body>
     </html>
   );

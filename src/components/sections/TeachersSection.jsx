@@ -23,8 +23,8 @@ export function TeachersSection() {
         }
 
         const result = await res.json();
-        const featuredTeachers = result.slice(0, 2);
-        setTeachers(featuredTeachers);
+        
+        setTeachers(result.slice(0, 3));
       } catch (error) {
         console.error("Fetch error:", error);
         toast.error("শিক্ষক লোড করতে সমস্যা হয়েছে");

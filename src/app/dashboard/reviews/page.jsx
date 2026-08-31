@@ -8,7 +8,6 @@ import {
   MdStarOutline,
   MdEdit,
   MdRateReview,
-  MdVerified,
   MdAdd
 } from "react-icons/md";
 import { Avatar, Spinner } from "@heroui/react";
@@ -37,7 +36,7 @@ export default function ReviewsPage() {
     fetchReviews();
   }, []);
 
-  // ডামি ডেটা
+  // ডামি ডেটা (status বাদ)
   const demoReviews = [
     {
       _id: 1,
@@ -45,8 +44,7 @@ export default function ReviewsPage() {
       role: "শিক্ষার্থী, শিক্ষক এবং নাগরিক পরিচয়",
       rating: 5,
       comment: "শিক্ষক হানাশির পরিচয় কোর্সটি সত্যিই অসাধারণ ছিল। আন্নাহের দরবারে লাখ কোটি শুকরিয়া যে আমাকে আরবী শেখার জন্য এরকম একটি একাডেমির সন্ধান দিয়েছেন।",
-      date: "২০২৬-০৮-১৫",
-      status: "approved"
+      date: "২০২৬-০৮-১৫"
     },
     {
       _id: 2,
@@ -54,8 +52,7 @@ export default function ReviewsPage() {
       role: "ছাত্রী, আরবীয় অধিকার শিক্ষক কার্য",
       rating: 5,
       comment: "আরবি লেখায় নিয়ম কর্তৃক কোর্স থেকে অনেক নতুন জিনিস শিখলাম যা আরবীয়ভাবে যোগাযোগ করতে চায়।",
-      date: "২০২৬-০৮-২০",
-      status: "approved"
+      date: "২০২৬-০৮-২০"
     },
     {
       _id: 3,
@@ -63,8 +60,7 @@ export default function ReviewsPage() {
       role: "শিক্ষার্থী, আরবীয় অধিকার শিক্ষক কার্য",
       rating: 4,
       comment: "আলোচনা করছে আরবিকে লেখা পরিবেশের সাথে বাদ দিতে পারি না। এই কোর্সটি আমার জীবনে একটি নতুন দিগন্ত উন্মোচন করেছে।",
-      date: "২০২৬-০৮-২৫",
-      status: "pending"
+      date: "২০২৬-০৮-২৫"
     }
   ];
 
@@ -158,26 +154,6 @@ export default function ReviewsPage() {
               <p className="mt-3 text-sm text-foreground/70 leading-relaxed line-clamp-3">
                 {review.comment}
               </p>
-
-              {/* ===== স্ট্যাটাস ব্যাজ ===== */}
-              <div className="mt-3 flex items-center gap-2">
-                <span className={`
-                  px-2.5 py-0.5 rounded-full text-xs font-medium
-                  ${review.status === "approved"
-                    ? "bg-success/20 text-success"
-                    : "bg-accent/20 text-accent"
-                  }
-                `}>
-                  {review.status === "approved" ? (
-                    <span className="flex items-center gap-1">
-                      <MdVerified className="size-3" />
-                      প্রকাশিত
-                    </span>
-                  ) : (
-                    "পেন্ডিং"
-                  )}
-                </span>
-              </div>
 
               {/* ===== অ্যাকশন বাটন ===== */}
               <div className="mt-4 pt-4 border-t border-border flex items-center justify-end gap-2">

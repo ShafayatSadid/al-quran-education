@@ -24,7 +24,7 @@ import {
 } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { addTeacher } from "@/lib/actions/teachers";
+
 import { authClient } from "@/lib/auth-client";
 
 export default function AddTeacherPage() {

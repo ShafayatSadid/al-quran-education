@@ -31,7 +31,7 @@ export default function UpdateTeacherPage() {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        
+
 
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/teachers/${id}`);
@@ -233,6 +233,23 @@ export default function UpdateTeacherPage() {
                 <FieldError className="text-xs text-error mt-1" />
               </TextField>
 
+              {/* ✅ title (নতুন ফিল্ড) */}
+              <TextField
+                isRequired
+                name="title"
+                defaultValue={teacher?.title}
+                validate={(value) => {
+                  if (!value || value.trim().length === 0) return "শিরোনাম আবশ্যক";
+                  return null;
+                }}
+              >
+                <Label className="text-sm font-medium text-foreground">শিরোনাম / পদবী</Label>
+                <Input
+                  placeholder="যেমন: তাজবিদ ও কিরআত বিশেষজ্ঞ"
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                />
+                <FieldError className="text-xs text-error mt-1" />
+              </TextField>
               {/* বিশেষত্ব */}
               <TextField
                 isRequired

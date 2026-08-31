@@ -3,51 +3,50 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaStar, FaUserGraduate, FaChalkboardTeacher } from "react-icons/fa";
 
-const teachers = [
-  {
-    id: 1,
-    name: "মাওলানা আব্দুল্লাহ",
-    title: "তাজবিদ ও কিরআত বিশেষজ্ঞ",
-    bio: "১৫ বছরের অভিজ্ঞতা, ইজাযাতপ্রাপ্ত ক্বারী। কুরআনের সঠিক উচ্চারণ ও মাখরাজ শিক্ষায় বিশেষজ্ঞ।",
-    image: "/images/teacher-1.jpg",
-    rating: 4.9,
-    students: 120,
-    expertise: "তাজবিদ, কিরআত",
-  },
-  {
-    id: 2,
-    name: "ড. মুহাম্মাদ হামিদ",
-    title: "তাফসীর ও আরবী ভাষা বিশেষজ্ঞ",
-    bio: "আজহার বিশ্ববিদ্যালয় থেকে পিএইচডি। কুরআনের অর্থ ও তাফসীর শিক্ষায় ২০ বছরের অভিজ্ঞতা।",
-    image: "/images/teacher-2.jpg",
-    rating: 4.8,
-    students: 85,
-    expertise: "তাফসীর, আরবী ভাষা",
-  },
-  {
-    id: 3,
-    name: "মাওলানা জাকিরুল ইসলাম",
-    title: "ফিকহ ও দুআ শিক্ষা বিশেষজ্ঞ",
-    bio: "ঢাকা আলিয়া মাদ্রাসার সাবেক শিক্ষক। নামাজ, দুআ ও দৈনন্দিন জীবনের ইসলামী শিক্ষায় দক্ষ।",
-    image: "/images/teacher-3.jpg",
-    rating: 4.9,
-    students: 200,
-    expertise: "ফিকহ, দুআ শিক্ষা",
-  },
-];
+
 
 export function TeachersSection() {
+
+  const [teachers, setTeachers] = useState([])
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/teachers`
+        );
+
+        if (!res.ok) {
+          throw new Error("শিক্ষক খুঁজে পাওয়া যায়নি");
+        }
+
+        const result = await res.json();
+        const featuredTeachers = result.slice(0, 2);
+        setTeachers(featuredTeachers);
+      } catch (error) {
+        console.error("Fetch error:", error);
+        toast.error("শিক্ষক লোড করতে সমস্যা হয়েছে");
+
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+    fetchTeacher();
+
+  }, []);
   return (
     <section className="relative overflow-hidden bg-background py-16 md:py-24">
-      
+
       {/* ডেকোরেটিভ গ্লো */}
       <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-accent/5 blur-3xl" />
       <div className="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-8">
-        
+
         {/* সেকশন হেডার */}
         <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
           <span className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
@@ -64,10 +63,10 @@ export function TeachersSection() {
 
         {/* শিক্ষক গ্রিড */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          
+
           {teachers.map((teacher) => (
             <div
-              key={teacher.id}
+              key={teacher._id}
               className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5"
             >
               {/* শিক্ষকের ছবি */}
@@ -114,7 +113,7 @@ export function TeachersSection() {
                 </div>
 
                 {/* প্রোফাইল দেখুন বাটন */}
-                <Link href={`/teachers/${teacher.id}`}>
+                <Link href={`/teachers/${teacher._id}`}>
                   <button className="mt-4 w-full rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary transition-all hover:bg-primary hover:text-white">
                     প্রোফাইল দেখুন →
                   </button>

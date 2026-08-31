@@ -1,57 +1,34 @@
-// components/sections/TestimonialsSection.tsx
+// components/sections/TestimonialsSection.jsx
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { FaStar, FaQuoteLeft, FaArrowLeft, FaArrowRight } from "react-icons/fa";
-
-const testimonials = [
-  {
-    id: 1,
-    name: "মোইদুল ইসলাম মন্ডল",
-    role: "শিক্ষার্থী, শিক্ষক এবং নাগরিক পরিচয়",
-    text: "শিক্ষক হানাশির পরিচয় কোর্সটি সত্যিই অসাধারণ ছিল। আন্নাহের দরবারে লাখ কোটি শুকরিয়া যে আমাকে আরবী শেখার জন্য এরকম একটি একাডেমির সন্ধান দিয়েছেন। প্রাথমিক ভাবিনি এত সহজভাবে আরবী শিখতে পারব। জীবনে যত্নকৃত বেল পাড় করে দিব এত আনন্দ আগে হয়নি বা এত ভালোও লাগেনি।",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "আশিমা বেগম",
-    role: "ছাত্রী, আরবীয় অধিকার শিক্ষক কার্য",
-    text: "আরবি লেখায় নিয়ম কর্তৃক কোর্স থেকে অনেক নতুন জিনিস শিখলাম যা আরবীয়ভাবে যোগাযোগ করতে চায়। তারপর এই নিয়মগুলি না জানলে আরবীয়ভাবে বলার সময় অনেক সমস্যা হয়।",
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "আশিমা",
-    role: "শিক্ষার্থী, আরবীয় অধিকার শিক্ষক কার্য",
-    text: "আলোচনা করছে আরবিকে লেখা পরিবেশের সাথে বাদ দিতে পারি না। এই কোর্সটি আমার জীবনে একটি নতুন দিগন্ত উন্মোচন করেছে।",
-    rating: 4,
-  },
-  {
-    id: 4,
-    name: "আব্দুল্লাহ আল মামুন",
-    role: "শিক্ষার্থী, তাজবিদ কোর্স",
-    text: "তাজবিদ কোর্সটি আমার কুরআন পড়ার ভুলগুলো শুধরে দিয়েছে। শিক্ষকের প্রতি কৃতজ্ঞতা জানাই। এখন আমি আত্মবিশ্বাসের সাথে কুরআন তিলাওয়াত করতে পারি।",
-    rating: 5,
-  },
-  {
-    id: 5,
-    name: "মারিয়াম খাতুন",
-    role: "শিক্ষার্থী, তাফসীর কোর্স",
-    text: "তাফসীর কোর্সটি আমার কুরআন বোঝার দৃষ্টিভঙ্গি বদলে দিয়েছে। প্রতিটি আয়াতের গভীরতা উপলব্ধি করতে পেরে আমি ধন্য।",
-    rating: 5,
-  },
-  {
-    id: 6,
-    name: "মুহাম্মাদ সাদিক",
-    role: "শিক্ষার্থী, নামাজ ও দুআ কোর্স",
-    text: "নামাজের সঠিক নিয়ম ও দুআগুলো খুব সুন্দরভাবে শিখিয়েছেন শিক্ষক। এখন আমার নামাজে আরও বেশি প্রশান্তি অনুভব করি।",
-    rating: 4,
-  },
-];
+import { Spinner } from "@heroui/react";
 
 export function TestimonialsSection() {
-  // ১. Embla কনফিগারেশন
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch reviews from server
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews`);
+        if (!res.ok) throw new Error("রিভিউ লোড করতে সমস্যা");
+        const data = await res.json();
+        setTestimonials(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        setTestimonials([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchReviews();
+  }, []);
+
+  // Embla Carousel configuration
   const options = {
     slidesToScroll: 1,
     containScroll: "trimSnaps",
@@ -65,7 +42,6 @@ export function TestimonialsSection() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  // ২. স্ক্রল স্ন্যাপ ও ইন্ডেক্স ট্র্যাক করা
   const onInit = useCallback((emblaApi) => {
     setScrollSnaps(emblaApi.scrollSnapList());
   }, []);
@@ -83,7 +59,6 @@ export function TestimonialsSection() {
     emblaApi.on("select", onSelect);
   }, [emblaApi, onInit, onSelect]);
 
-  // ৩. অ্যারো বাটনের ফাংশন
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -98,6 +73,28 @@ export function TestimonialsSection() {
     },
     [emblaApi]
   );
+
+  // Loading state
+  if (loading) {
+    return (
+      <section className="relative overflow-hidden bg-background py-16 md:py-24">
+        <div className="flex items-center justify-center min-h-[200px]">
+          <Spinner className="text-primary" size="lg" />
+        </div>
+      </section>
+    );
+  }
+
+  // No data state
+  if (testimonials.length === 0) {
+    return (
+      <section className="relative overflow-hidden bg-background py-16 md:py-24">
+        <div className="container mx-auto text-center">
+          <p className="text-muted">কোনো মতামত পাওয়া যায়নি</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative overflow-hidden bg-background py-16 md:py-24">
@@ -127,10 +124,9 @@ export function TestimonialsSection() {
           <div className="flex -mx-3">
             {testimonials.map((review) => (
               <div
-                key={review.id}
+                key={review._id || review.id}
                 className="min-w-0 flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] px-3"
               >
-                {/* ===== কার্ড ডিজাইন (পুরোপুরি আগের মতো) ===== */}
                 <div className="group relative h-full rounded-2xl border border-border bg-card p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:p-8">
                   
                   {/* বাম পাশে সোনালি বর্ডার (হভারে) */}
@@ -157,24 +153,32 @@ export function TestimonialsSection() {
 
                   {/* রিভিউ টেক্সট */}
                   <p className="relative z-10 text-sm leading-relaxed text-foreground/80 md:text-base">
-                    {review.text.length > 120
-                      ? `${review.text.substring(0, 120)}...`
-                      : review.text}
+                    {review.comment && review.comment.length > 120
+                      ? `${review.comment.substring(0, 120)}...`
+                      : review.comment}
                   </p>
 
-                  {/* ব্যক্তির তথ্য */}
-                  <div className="mt-6 flex items-center gap-4 border-t border-border/50 pt-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                      {review.name.charAt(0)}
+                  {/* ব্যক্তির তথ্য + তারিখ */}
+                  <div className="mt-6 flex items-center justify-between border-t border-border/50 pt-4">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                        {review.studentName?.charAt(0) || "?"}
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-bold text-primary md:text-base">
+                          {review.studentName}
+                        </h4>
+                        <p className="text-xs text-muted md:text-sm">
+                          {review.role || "শিক্ষার্থী"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-primary md:text-base">
-                        {review.name}
-                      </h4>
-                      <p className="text-xs text-muted md:text-sm">
-                        {review.role}
-                      </p>
-                    </div>
+                    {/* ✅ তারিখ ফিল্ড */}
+                    {review.date && (
+                      <span className="text-xs text-muted shrink-0 ml-2">
+                        {review.date}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

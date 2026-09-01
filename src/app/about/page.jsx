@@ -212,7 +212,7 @@ export default function AboutPage() {
                             </button>
                         </Link>
                         <a
-                            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '8801234567890'}?text=${encodeURIComponent('আমি Al-Quran Education সম্পর্কে জানতে চাই।')}`}
+                            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}?text=${encodeURIComponent('আমি Al-Quran Education সম্পর্কে জানতে চাই।')}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="rounded-full border-2 border-border text-foreground hover:bg-primary/10 font-heading font-semibold px-8 py-3 transition-all inline-block"

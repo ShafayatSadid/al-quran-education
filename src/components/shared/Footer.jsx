@@ -109,15 +109,18 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link
-                                    href="/contact"
-                                    className="text-sm text-foreground/70 transition-all hover:text-primary hover:translate-x-1 inline-block"
-                                >
+                                
+                                <a
+                                    href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}?text=${encodeURIComponent('আমি Al-Quran Education সম্পর্কে জানতে চাই।')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-foreground/70 transition-all hover:text-primary hover:translate-x-1 inline-block">
                                     যোগাযোগ
-                                </Link>
+                                </a>
                             </li>
                         </ul>
                     </div>
+
 
                     {/* ৩য় কলাম: যোগাযোগ */}
                     <div className="space-y-4">

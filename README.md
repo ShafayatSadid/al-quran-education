@@ -1,4 +1,4 @@
-```markdown
+
 # 🕌 Al-Quran Education
 
 An Islamic education platform designed for learning the Quran with proper Tajweed, Tafseer, and Arabic language. This modern web application offers courses, teacher profiles, student reviews, and a full-featured admin panel.
@@ -187,4 +187,3 @@ For any questions or support, please reach out to the developer.
 ---
 
 **Made with ❤️ by Shafayat Hossain**
-```

@@ -133,12 +133,12 @@ export default function LoginPage() {
           </Form>
 
           {/* রেজিস্টার লিংক */}
-          <p className="text-center text-sm text-muted mt-6">
+          {/* <p className="text-center text-sm text-muted mt-6">
             অ্যাকাউন্ট নেই?{" "}
             <Link href="/register" className="text-primary hover:underline font-semibold transition">
               অ্যাকাউন্ট তৈরি করুন
             </Link>
-          </p>
+          </p> */}
 
         </div>
       </div>

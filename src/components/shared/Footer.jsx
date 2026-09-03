@@ -109,7 +109,7 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                
+
                                 <a
                                     href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}?text=${encodeURIComponent('আমি Al-Quran Education সম্পর্কে জানতে চাই।')}`}
                                     target="_blank"
@@ -172,7 +172,9 @@ export function Footer() {
                 {/* ===== কপিরাইট বার ===== */}
                 <div className="flex flex-col items-center justify-between gap-4 border-t border-border py-6 md:flex-row">
                     <p className="text-sm text-foreground/60">
-                        &copy; {new Date().getFullYear()} Al Quran Education. সর্বস্বত্ব সংরক্ষিত।
+                        <Link href={'/login'}>
+                            &copy; {new Date().getFullYear()} Al Quran Education. সর্বস্বত্ব সংরক্ষিত।
+                        </Link>
                     </p>
                     <p className="text-sm text-foreground/40">
                         Design & Development by <Link href="https://github.com/ShafayatSadid" target="_blank" className="hover:text-primary transition">Shafayat Hossain</Link>

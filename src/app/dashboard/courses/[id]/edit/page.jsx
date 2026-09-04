@@ -1,4 +1,4 @@
-// app/dashboard/courses/[id]/edit/page.jsx
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -26,7 +26,7 @@ export default function EditCoursePage() {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
-  const [formData, setFormData] = useState({
+  const [initialData, setInitialData] = useState({
     title: "",
     description: "",
     duration: "",
@@ -46,7 +46,7 @@ export default function EditCoursePage() {
 
         const featuresString = data.features ? data.features.join("\n") : "";
 
-        setFormData({
+        setInitialData({
           title: data.title || "",
           description: data.description || "",
           duration: data.duration || "",
@@ -73,31 +73,34 @@ export default function EditCoursePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const featuresArray = formData.features
-      .split("\n")
-      .filter((item) => item.trim() !== "");
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    const featuresArray = data.features
+      ? data.features.split("\n").filter((item) => item.trim() !== "")
+      : [];
 
     const courseData = {
-      title: formData.title,
-      description: formData.description,
-      duration: formData.duration,
-      students: parseInt(formData.students) || 0,
-      level: formData.level,
+      title: data.title,
+      description: data.description,
+      duration: data.duration,
+      students: parseInt(data.students) || 0,
+      level: data.level,
       features: featuresArray,
-      status: formData.status,
-      popular: formData.popular,
+      status: data.status,
+      popular: data.popular === "on" ? true : false,
     };
 
     setLoading(true);
 
     try {
-      const { data, error } = await authClient.token();
+      const { data: tokenData, error } = await authClient.token();
       if (error) {
         toast.error("অথেনটিকেশন সমস্যা: লগইন করুন");
         setLoading(false);
         return;
       }
-      const token = data?.token;
+      const token = tokenData?.token;
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/courses/${id}`, {
         method: "PATCH",
@@ -156,8 +159,7 @@ export default function EditCoursePage() {
           <TextField
             isRequired
             name="title"
-            defaultValue={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            defaultValue={initialData.title}
             validate={(value) => {
               if (!value || value.trim().length === 0) return "শিরোনাম আবশ্যক";
               if (value.trim().length < 3) return "শিরোনাম কমপক্ষে ৩ অক্ষর হতে হবে";
@@ -176,8 +178,7 @@ export default function EditCoursePage() {
           <TextField
             isRequired
             name="description"
-            defaultValue={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            defaultValue={initialData.description}
             validate={(value) => {
               if (!value || value.trim().length === 0) return "বিবরণ আবশ্যক";
               if (value.trim().length < 10) return "বিবরণ কমপক্ষে ১০ অক্ষর হতে হবে";
@@ -199,8 +200,7 @@ export default function EditCoursePage() {
             <TextField
               isRequired
               name="duration"
-              defaultValue={formData.duration}
-              onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+              defaultValue={initialData.duration}
               validate={(value) => {
                 if (!value || value.trim().length === 0) return "সময়কাল আবশ্যক";
                 return null;
@@ -217,8 +217,7 @@ export default function EditCoursePage() {
             <TextField
               isRequired
               name="students"
-              defaultValue={formData.students}
-              onChange={(e) => setFormData({ ...formData, students: e.target.value })}
+              defaultValue={initialData.students}
               validate={(value) => {
                 if (!value) return "শিক্ষার্থী সংখ্যা আবশ্যক";
                 const num = parseInt(value);
@@ -240,8 +239,8 @@ export default function EditCoursePage() {
                 স্তর
               </Label>
               <select
-                value={formData.level}
-                onChange={(e) => setFormData({ ...formData, level: e.target.value })}
+                name="level"
+                defaultValue={initialData.level}
                 className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
               >
                 <option value="শিক্ষানবিস">শিক্ষানবিস</option>
@@ -260,8 +259,8 @@ export default function EditCoursePage() {
               ফিচার সমূহ <span className="text-muted font-normal">(প্রতি লাইনে একটি করে)</span>
             </Label>
             <TextArea
-              value={formData.features}
-              onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+              name="features"
+              defaultValue={initialData.features}
               placeholder="মাখরাজ&#10;তাজবিদ&#10;সিফাত&#10;নাজরানা&#10;মাসনুন দোয়া"
               minRows={4}
               maxRows={8}
@@ -281,8 +280,7 @@ export default function EditCoursePage() {
                     type="radio"
                     name="status"
                     value="active"
-                    checked={formData.status === "active"}
-                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                    defaultChecked={initialData.status === "active"}
                     className="w-4 h-4 text-primary focus:ring-primary/20 accent-primary"
                   />
                   <span className="text-sm text-foreground">সক্রিয়</span>
@@ -292,8 +290,7 @@ export default function EditCoursePage() {
                     type="radio"
                     name="status"
                     value="inactive"
-                    checked={formData.status === "inactive"}
-                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                    defaultChecked={initialData.status === "inactive"}
                     className="w-4 h-4 text-error focus:ring-error/20 accent-error"
                   />
                   <span className="text-sm text-foreground">নিষ্ক্রিয়</span>
@@ -308,8 +305,8 @@ export default function EditCoursePage() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={formData.popular}
-                  onChange={(e) => setFormData({ ...formData, popular: e.target.checked })}
+                  name="popular"
+                  defaultChecked={initialData.popular}
                   className="w-4 h-4 text-accent focus:ring-accent/20 accent-accent rounded"
                 />
                 <span className="text-sm text-foreground">

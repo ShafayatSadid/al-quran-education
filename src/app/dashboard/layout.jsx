@@ -61,7 +61,7 @@ export default function DashboardLayout({ children }) {
           bg-card
           border-r border-border
           p-6
-          z-20
+          z-50
           transition-transform duration-300
           flex flex-col
           shadow-2xl md:shadow-none

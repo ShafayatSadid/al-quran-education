@@ -254,13 +254,12 @@ export default function EditCoursePage() {
           {/* features */}
           <TextField
             name="features"
+            defaultValue={initialData.features}
           >
             <Label className="text-sm font-medium text-foreground">
               ফিচার সমূহ <span className="text-muted font-normal">(প্রতি লাইনে একটি করে)</span>
             </Label>
-            <TextArea
-              name="features"
-              defaultValue={initialData.features}
+            <TextArea     
               placeholder="মাখরাজ&#10;তাজবিদ&#10;সিফাত&#10;নাজরানা&#10;মাসনুন দোয়া"
               minRows={4}
               maxRows={8}

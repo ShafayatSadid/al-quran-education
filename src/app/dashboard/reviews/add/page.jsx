@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Form,
   Button,
@@ -13,9 +14,12 @@ import {
   TextField,
   TextArea
 } from "@heroui/react";
+import { CldUploadWidget } from "next-cloudinary";
 import {
   MdArrowBack,
-  MdSave
+  MdSave,
+  MdClose,
+  MdCloudUpload
 } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -24,6 +28,7 @@ import { authClient } from "@/lib/auth-client";
 export default function AddReviewPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useLocalStorage("reviewImageUrl", "");
 
   const [formData, setFormData] = useLocalStorage("reviewFormData", {
     studentName: "",
@@ -32,6 +37,17 @@ export default function AddReviewPage() {
     comment: "",
     date: new Date().toISOString().split("T")[0],
   });
+
+  const handleUploadSuccess = (result) => {
+    if (result.event === "success") {
+      setImageUrl(result.info.secure_url);
+      toast.success("ছবি আপলোড সফল হয়েছে!");
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageUrl("");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +58,7 @@ export default function AddReviewPage() {
       rating: parseInt(formData.rating),
       comment: formData.comment,
       date: formData.date,
+      image: imageUrl,
     };
 
     if (!reviewData.studentName.trim()) {
@@ -78,6 +95,7 @@ export default function AddReviewPage() {
       if (result.insertedId) {
         toast.success("রিভিউ যোগ করা হয়েছে!");
         localStorage.removeItem("reviewFormData");
+        localStorage.removeItem("reviewImageUrl");
         router.push("/dashboard/reviews");
       } else {
         toast.error("রিভিউ যোগ করতে সমস্যা হয়েছে");
@@ -109,107 +127,175 @@ export default function AddReviewPage() {
         onSubmit={handleSubmit}
         className="bg-card/50 border border-border rounded-2xl p-6 md:p-8 space-y-6"
       >
-        <div className="space-y-4">
-          {/* studentName */}
-          <TextField
-            isRequired
-            name="studentName"
-            defaultValue={formData.studentName}
-            validate={(value) => {
-              if (!value || value.trim().length === 0) return "শিক্ষার্থীর নাম আবশ্যক";
-              return null;
-            }}
-          >
-            <Label className="text-sm font-medium text-foreground">শিক্ষার্থীর নাম</Label>
-            <Input
-              name="studentName"
-              type="text"
-              onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
-              placeholder="যেমন: মোইদুল ইসলাম মন্ডল"
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-            />
-            <FieldError className="text-xs text-error mt-1" />
-          </TextField>
-
-          {/* role */}
-          <TextField
-            name="role"
-            defaultValue={formData.role}
-          >
-            <Label className="text-sm font-medium text-foreground">
-              ভূমিকা <span className="text-muted font-normal">(ঐচ্ছিক)</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* ===== ইমেজ আপলোড ===== */}
+          <div className="md:col-span-1">
+            <Label className="block text-sm font-medium text-foreground mb-2">
+              ছবি <span className="text-muted font-normal">(ঐচ্ছিক)</span>
             </Label>
-            <Input
-              name="role"
-              type="text"
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              placeholder="যেমন: শিক্ষার্থী, শিক্ষক এবং নাগরিক পরিচয়"
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-            />
-          </TextField>
 
-          {/* rating + date */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label className="block text-sm font-medium text-foreground mb-1.5">
-                রেটিং
-              </Label>
-              <select
-                name="rating"
-                value={formData.rating}
-                onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-              >
-                <option value="1">⭐ ১</option>
-                <option value="2">⭐⭐ ২</option>
-                <option value="3">⭐⭐⭐ ৩</option>
-                <option value="4">⭐⭐⭐⭐ ৪</option>
-                <option value="5">⭐⭐⭐⭐⭐ ৫</option>
-              </select>
-            </div>
+            <CldUploadWidget
+              cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+              uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+              onSuccess={handleUploadSuccess}
+              options={{
+                sources: ["local", "url", "camera"],
+                multiple: false,
+                maxFileSize: 2000000,
+                clientAllowedFormats: ["jpg", "png", "webp", "jpeg"],
+              }}
+            >
+              {({ open }) => (
+                <div
+                  onClick={() => open()}
+                  className={`
+                    relative w-full aspect-square rounded-xl border-2 border-dashed 
+                    ${imageUrl ? "border-primary" : "border-border"}
+                    bg-secondary/30 hover:bg-secondary/50 transition-all cursor-pointer
+                    flex flex-col items-center justify-center overflow-hidden
+                  `}
+                >
+                  {imageUrl ? (
+                    <>
+                      <Image
+                        src={imageUrl}
+                        alt="শিক্ষার্থীর ছবি"
+                        fill
+                        className="object-cover rounded-xl"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveImage();
+                        }}
+                        className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 text-white rounded-full transition z-10"
+                      >
+                        <MdClose className="size-4" />
+                      </button>
+                    </>
+                  ) : (
+                    <div className="text-center p-4">
+                      <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                        <MdCloudUpload className="size-8 text-primary" />
+                      </div>
+                      <p className="text-sm font-medium text-foreground">
+                        ইমেজ আপলোড করুন
+                      </p>
+                      <p className="text-xs text-muted mt-1">
+                        PNG, JPG, WebP (সর্বোচ্চ ২MB)
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </CldUploadWidget>
+          </div>
 
+          {/* ===== ফর্ম ফিল্ড ===== */}
+          <div className="md:col-span-2 space-y-4">
+            {/* studentName */}
             <TextField
               isRequired
-              name="date"
-              defaultValue={formData.date}
+              name="studentName"
+              defaultValue={formData.studentName}
               validate={(value) => {
-                if (!value) return "তারিখ আবশ্যক";
+                if (!value || value.trim().length === 0) return "শিক্ষার্থীর নাম আবশ্যক";
                 return null;
               }}
             >
-              <Label className="text-sm font-medium text-foreground">তারিখ</Label>
+              <Label className="text-sm font-medium text-foreground">শিক্ষার্থীর নাম</Label>
               <Input
-                name="date"
-                type="date"
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                name="studentName"
+                type="text"
+                onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
+                placeholder="যেমন: মোইদুল ইসলাম মন্ডল"
                 className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
               />
               <FieldError className="text-xs text-error mt-1" />
             </TextField>
-          </div>
 
-          {/* comment */}
-          <TextField
-            isRequired
-            name="comment"
-            defaultValue={formData.comment}
-            validate={(value) => {
-              if (!value || value.trim().length === 0) return "মন্তব্য আবশ্যক";
-              if (value.trim().length < 10) return "মন্তব্য কমপক্ষে ১০ অক্ষর হতে হবে";
-              return null;
-            }}
-          >
-            <Label className="text-sm font-medium text-foreground">মন্তব্য</Label>
-            <TextArea
+            {/* role */}
+            <TextField
+              name="role"
+              defaultValue={formData.role}
+            >
+              <Label className="text-sm font-medium text-foreground">
+                ভূমিকা <span className="text-muted font-normal">(ঐচ্ছিক)</span>
+              </Label>
+              <Input
+                name="role"
+                type="text"
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                placeholder="যেমন: শিক্ষার্থী, শিক্ষক এবং নাগরিক পরিচয়"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+              />
+            </TextField>
+
+            {/* rating + date */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label className="block text-sm font-medium text-foreground mb-1.5">
+                  রেটিং
+                </Label>
+                <select
+                  name="rating"
+                  value={formData.rating}
+                  onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                >
+                  <option value="1">⭐ ১</option>
+                  <option value="2">⭐⭐ ২</option>
+                  <option value="3">⭐⭐⭐ ৩</option>
+                  <option value="4">⭐⭐⭐⭐ ৪</option>
+                  <option value="5">⭐⭐⭐⭐⭐ ৫</option>
+                </select>
+              </div>
+
+              <TextField
+                isRequired
+                name="date"
+                defaultValue={formData.date}
+                validate={(value) => {
+                  if (!value) return "তারিখ আবশ্যক";
+                  return null;
+                }}
+              >
+                <Label className="text-sm font-medium text-foreground">তারিখ</Label>
+                <Input
+                  name="date"
+                  type="date"
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                />
+                <FieldError className="text-xs text-error mt-1" />
+              </TextField>
+            </div>
+
+            {/* comment */}
+            <TextField
+              isRequired
               name="comment"
-              onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-              placeholder="শিক্ষার্থীর মতামত লিখুন"
-              minRows={4}
-              maxRows={8}
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition resize-none"
-            />
-            <FieldError className="text-xs text-error mt-1" />
-          </TextField>
+              defaultValue={formData.comment}
+              validate={(value) => {
+                if (!value || value.trim().length === 0) return "মন্তব্য আবশ্যক";
+                if (value.trim().length < 10) return "মন্তব্য কমপক্ষে ১০ অক্ষর হতে হবে";
+                return null;
+              }}
+            >
+              <Label className="text-sm font-medium text-foreground">মন্তব্য</Label>
+              <TextArea
+                name="comment"
+                onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+                placeholder="শিক্ষার্থীর মতামত লিখুন"
+                minRows={4}
+                maxRows={8}
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition resize-none"
+              />
+              <FieldError className="text-xs text-error mt-1" />
+            </TextField>
+          </div>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-6 border-t border-border">

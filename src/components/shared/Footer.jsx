@@ -42,7 +42,7 @@ export function Footer() {
                         {/* সোশ্যাল মিডিয়া লিংক */}
                         <div className="flex gap-3 pt-2">
                             <a
-                                href="#"
+                                href="https://www.facebook.com/share/1CVGqWWwdK/"
                                 className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-foreground/60 transition-all hover:bg-primary hover:text-white hover:border-primary"
                                 aria-label="Facebook"
                             >
@@ -128,18 +128,18 @@ export function Footer() {
                         <ul className="space-y-3">
                             <li className="flex items-start gap-3 text-sm text-foreground/70">
                                 <FaMapMarkerAlt className="mt-1 size-4 text-accent shrink-0" />
-                                <span>ঢাকা, বাংলাদেশ</span>
+                                <span>কায়রো, মিশর</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-foreground/70">
                                 <FaEnvelope className="size-4 text-accent shrink-0" />
-                                <a href="mailto:info@alquraneducation.com" className="hover:text-primary transition">
-                                    info@alquraneducation.com
+                                <a href="hello.alquraneducation@gmail.com" className="hover:text-primary transition">
+                                    hello.alquraneducation@gmail.com
                                 </a>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-foreground/70">
                                 <FaPhoneAlt className="size-4 text-accent shrink-0" />
                                 <a href="tel:+8801234567890" className="hover:text-primary transition">
-                                    +৮৮০ ১২৩৪ ৫৬৭৮৯০
+                                    +201022349434
                                 </a>
                             </li>
                         </ul>

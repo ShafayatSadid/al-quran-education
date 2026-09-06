@@ -36,35 +36,9 @@ export default function ReviewsPage() {
     fetchReviews();
   }, []);
 
-  // ডামি ডেটা (status বাদ)
-  const demoReviews = [
-    {
-      _id: 1,
-      studentName: "মোইদুল ইসলাম মন্ডল",
-      role: "শিক্ষার্থী, শিক্ষক এবং নাগরিক পরিচয়",
-      rating: 5,
-      comment: "শিক্ষক হানাশির পরিচয় কোর্সটি সত্যিই অসাধারণ ছিল। আন্নাহের দরবারে লাখ কোটি শুকরিয়া যে আমাকে আরবী শেখার জন্য এরকম একটি একাডেমির সন্ধান দিয়েছেন।",
-      date: "২০২৬-০৮-১৫"
-    },
-    {
-      _id: 2,
-      studentName: "আশিমা বেগম",
-      role: "ছাত্রী, আরবীয় অধিকার শিক্ষক কার্য",
-      rating: 5,
-      comment: "আরবি লেখায় নিয়ম কর্তৃক কোর্স থেকে অনেক নতুন জিনিস শিখলাম যা আরবীয়ভাবে যোগাযোগ করতে চায়।",
-      date: "২০২৬-০৮-২০"
-    },
-    {
-      _id: 3,
-      studentName: "আশিমা",
-      role: "শিক্ষার্থী, আরবীয় অধিকার শিক্ষক কার্য",
-      rating: 4,
-      comment: "আলোচনা করছে আরবিকে লেখা পরিবেশের সাথে বাদ দিতে পারি না। এই কোর্সটি আমার জীবনে একটি নতুন দিগন্ত উন্মোচন করেছে।",
-      date: "২০২৬-০৮-২৫"
-    }
-  ];
 
-  const displayReviews = reviews.length > 0 ? reviews : demoReviews;
+
+  const displayReviews = reviews;
 
   const getRatingStars = (rating) => {
     return (
@@ -132,11 +106,16 @@ export default function ReviewsPage() {
               {/* ===== হেডার: নাম + রেটিং ===== */}
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <Avatar size="md">
-                    <Avatar.Fallback className="bg-primary/10 text-primary font-heading font-bold">
-                      {review.studentName?.charAt(0) || "?"}
-                    </Avatar.Fallback>
+                  
+                  {/* student avatar */}
+                  <Avatar>
+                    <Avatar.Image
+                      alt="student image"
+                      src={review.image || ""}
+                    />
+                    <Avatar.Fallback className="bg-primary/10 font-bold text-primary">{review.studentName?.charAt(0) || "?"}</Avatar.Fallback>
                   </Avatar>
+                  
                   <div>
                     <h3 className="font-heading font-semibold text-foreground">
                       {review.studentName}

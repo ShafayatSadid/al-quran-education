@@ -57,6 +57,7 @@ import NavBar from "@/components/shared/NavBar";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "@/components/shared/Footer";
+import WhatsAppButton from "@/components/shared/WhatsAppButton";
 
 const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali"],
@@ -95,6 +96,7 @@ export default function RootLayout({ children }) {
         <main>
           {children}
         </main>
+        <WhatsAppButton />
         <Footer />
 
       </body>

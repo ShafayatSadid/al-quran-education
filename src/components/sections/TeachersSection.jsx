@@ -23,8 +23,8 @@ export function TeachersSection() {
         }
 
         const result = await res.json();
-        
-        setTeachers(result.slice(0, 3));
+        const maleTeachers = result.filter((t) => t.gender === "male" || !t.gender);
+        setTeachers(maleTeachers.slice(0, 3));
       } catch (error) {
         console.error("Fetch error:", error);
         toast.error("শিক্ষক লোড করতে সমস্যা হয়েছে");

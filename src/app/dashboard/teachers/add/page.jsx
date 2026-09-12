@@ -1,4 +1,4 @@
-// app/admin/teachers/add/page.jsx
+// app/dashboard/teachers/add/page.jsx
 "use client";
 
 import { useState } from "react";
@@ -450,7 +450,7 @@ export default function AddTeacherPage() {
 
         <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-6 border-t border-border">
           <Link
-            href="/admin/teachers"
+            href="/dashboard/teachers"
             className="w-full sm:w-auto px-6 py-2.5 text-sm font-medium text-foreground hover:bg-primary/5 rounded-xl transition text-center"
           >
             বাতিল

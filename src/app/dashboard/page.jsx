@@ -1,4 +1,4 @@
-// app/admin/page.jsx
+// app/dashboard/page.jsx
 "use client";
 
 import Link from "next/link";

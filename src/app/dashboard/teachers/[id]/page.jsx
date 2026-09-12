@@ -22,7 +22,7 @@ import toast from "react-hot-toast";
 
 export default function UpdateTeacherPage() {
   const router = useRouter();
-  const { id } = useParams(); // ✅ ফোল্ডারের নাম [id] তাই id পাবেন
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [teacher, setTeacher] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -31,8 +31,6 @@ export default function UpdateTeacherPage() {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-
-
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/teachers/${id}`);
 
@@ -74,6 +72,7 @@ export default function UpdateTeacherPage() {
 
       updatedTeacher.image = imageUrl || "";
       updatedTeacher.students = parseInt(updatedTeacher.students) || 0;
+      updatedTeacher.rating = parseFloat(updatedTeacher.rating) || 0;
 
       const { data, error } = await authClient.token();
       if (error) {
@@ -233,7 +232,7 @@ export default function UpdateTeacherPage() {
                 <FieldError className="text-xs text-error mt-1" />
               </TextField>
 
-              {/* ✅ title (নতুন ফিল্ড) */}
+              {/* title */}
               <TextField
                 isRequired
                 name="title"
@@ -250,6 +249,7 @@ export default function UpdateTeacherPage() {
                 />
                 <FieldError className="text-xs text-error mt-1" />
               </TextField>
+
               {/* বিশেষত্ব */}
               <TextField
                 isRequired
@@ -312,8 +312,37 @@ export default function UpdateTeacherPage() {
                 </TextField>
               </div>
 
-              {/* শিক্ষার্থী সংখ্যা ও যোগদানের তারিখ */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* ✅ gender (নতুন ফিল্ড) */}
+              <div>
+                <Label className="block text-sm font-medium text-foreground mb-1.5">
+                  লিঙ্গ <span className="text-error">*</span>
+                </Label>
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      defaultChecked={teacher?.gender === "male" || !teacher?.gender}
+                      className="w-4 h-4 text-primary focus:ring-primary/20 accent-primary"
+                    />
+                    <span className="text-sm text-foreground">পুরুষ</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      defaultChecked={teacher?.gender === "female"}
+                      className="w-4 h-4 text-primary focus:ring-primary/20 accent-primary"
+                    />
+                    <span className="text-sm text-foreground">মহিলা</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* শিক্ষার্থী সংখ্যা, যোগদানের তারিখ, রেটিং */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <TextField
                   isRequired
                   name="students"
@@ -348,6 +377,29 @@ export default function UpdateTeacherPage() {
                   <Label className="text-sm font-medium text-foreground">যোগদানের তারিখ</Label>
                   <Input
                     type="date"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                  />
+                  <FieldError className="text-xs text-error mt-1" />
+                </TextField>
+
+                <TextField
+                  isRequired
+                  name="rating"
+                  defaultValue={teacher?.rating}
+                  validate={(value) => {
+                    if (!value) return "রেটিং আবশ্যক";
+                    const num = parseFloat(value);
+                    if (isNaN(num) || num < 1 || num > 5) return "রেটিং ১ থেকে ৫ এর মধ্যে হতে হবে";
+                    return null;
+                  }}
+                >
+                  <Label className="text-sm font-medium text-foreground">রেটিং</Label>
+                  <Input
+                    type="number"
+                    step="0.1"
+                    min="1"
+                    max="5"
+                    placeholder="৪.৮"
                     className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
                   />
                   <FieldError className="text-xs text-error mt-1" />

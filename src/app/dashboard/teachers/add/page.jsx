@@ -38,6 +38,7 @@ export default function AddTeacherPage() {
     bio: "",
     email: "",
     phone: "",
+    gender: "male", // ✅ নতুন ফিল্ড
     status: "active",
     students: "",
     joined: "",
@@ -206,7 +207,7 @@ export default function AddTeacherPage() {
               <FieldError className="text-xs text-error mt-1" />
             </TextField>
 
-            {/* ✅ title (নতুন ফিল্ড) */}
+            {/* title */}
             <TextField
               isRequired
               name="title"
@@ -240,13 +241,13 @@ export default function AddTeacherPage() {
               <Label className="text-sm font-medium text-foreground">বিশেষত্ব</Label>
               <Input
                 name="expertise"
-
                 onChange={(e) => setFormData({ ...formData, expertise: e.target.value })}
                 placeholder="যেমন: তাজবিদ, তাফসীর, ফিকহ"
                 className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
               />
               <FieldError className="text-xs text-error mt-1" />
             </TextField>
+
             {/* email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <TextField
@@ -265,14 +266,13 @@ export default function AddTeacherPage() {
                 <Input
                   name="email"
                   type="email"
-
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="teacher@example.com"
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
                 />
                 <FieldError className="text-xs text-error mt-1" />
               </TextField>
-              {/* phone */}
+
               <TextField
                 isRequired
                 defaultValue={formData.phone}
@@ -288,7 +288,6 @@ export default function AddTeacherPage() {
                 <Input
                   name="phone"
                   type="tel"
-
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="+201554629555"
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
@@ -297,9 +296,39 @@ export default function AddTeacherPage() {
               </TextField>
             </div>
 
+            {/* ✅ gender (নতুন ফিল্ড) */}
+            <div>
+              <Label className="block text-sm font-medium text-foreground mb-1.5">
+                লিঙ্গ <span className="text-error">*</span>
+              </Label>
+              <div className="flex items-center gap-6">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={formData.gender === "male"}
+                    onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                    className="w-4 h-4 text-primary focus:ring-primary/20 accent-primary"
+                  />
+                  <span className="text-sm text-foreground">পুরুষ</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={formData.gender === "female"}
+                    onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                    className="w-4 h-4 text-primary focus:ring-primary/20 accent-primary"
+                  />
+                  <span className="text-sm text-foreground">মহিলা</span>
+                </label>
+              </div>
+            </div>
+
             {/* students + joined + rating */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {/* student */}
               <TextField
                 isRequired
                 defaultValue={formData.students}
@@ -315,7 +344,6 @@ export default function AddTeacherPage() {
                 <Input
                   name="students"
                   type="number"
-
                   onChange={(e) => setFormData({ ...formData, students: e.target.value })}
                   placeholder="যেমন: ১২০"
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
@@ -323,7 +351,6 @@ export default function AddTeacherPage() {
                 <FieldError className="text-xs text-error mt-1" />
               </TextField>
 
-              {/* join date */}
               <TextField
                 isRequired
                 defaultValue={formData.joined}
@@ -338,14 +365,12 @@ export default function AddTeacherPage() {
                 <Input
                   name="joined"
                   type="date"
-
                   onChange={(e) => setFormData({ ...formData, joined: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-foreground placeholder:text-muted/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
                 />
                 <FieldError className="text-xs text-error mt-1" />
               </TextField>
 
-              {/* ⭐ rating */}
               <TextField
                 isRequired
                 defaultValue={formData.rating}
@@ -375,16 +400,16 @@ export default function AddTeacherPage() {
               </TextField>
             </div>
 
-            {/*  bio */}
+            {/* bio */}
             <TextField
               defaultValue={formData.bio}
-              name="bio">
+              name="bio"
+            >
               <Label className="text-sm font-medium text-foreground">
                 বায়ো <span className="text-muted font-normal">(ঐচ্ছিক)</span>
               </Label>
               <TextArea
                 name="bio"
-
                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                 className="h-32 max-w-120 bg-background text-foreground placeholder:text-muted/50"
                 placeholder="শিক্ষকের পরিচয়, অভিজ্ঞতা ও বিশেষ দক্ষতা"

@@ -1,21 +1,23 @@
 // components/sections/HeroSection.tsx
 import Image from "next/image";
 import Link from "next/link";
+import { MdFavorite, MdMenuBook, MdSchool } from "react-icons/md";
+
 
 export function Hero() {
   return (
     <section className="relative w-full overflow-hidden bg-background py-24 md:py-10">
-      
+
       {/* ব্যাকগ্রাউন্ডের ডেকোরেশন (ডাইনামিক গ্লো) */}
       <div className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-accent/5 blur-3xl dark:bg-accent/10" />
       <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-primary/5 blur-3xl dark:bg-primary/10" />
-      
+
       {/* কন্টেইনার */}
       <div className="container mx-auto flex min-h-[80vh] max-w-7xl flex-col-reverse items-center justify-center gap-8 px-4 md:px-8 lg:flex-row lg:gap-12">
-        
+
         {/* ====== বাম পাশ: টেক্সট কন্টেন্ট ====== */}
         <div className="flex w-full flex-1 flex-col items-center text-center lg:items-start lg:text-left">
-          
+
           {/* ব্যাজ/চিহ্ন */}
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold text-primary dark:bg-primary/10">
             <span className="relative flex h-2 w-2">
@@ -33,25 +35,32 @@ export function Hero() {
 
           {/* সাব-টেক্সট */}
           <p className="mb-6 max-w-lg text-base leading-relaxed text-foreground/70 sm:text-lg">
-            সঠিক তাজবিদ, অর্থ ও তাফসীর—ঘরে বসেই অভিজ্ঞ আলেমদের সাথে। 
+            সঠিক তাজবিদ, অর্থ ও তাফসীর—ঘরে বসেই অভিজ্ঞ আলেমদের সাথে।
             আপনার কুরআন শিক্ষার যাত্রা শুরু হোক আজই।
           </p>
 
           {/* স্ট্যাটাস/পরিসংখ্যান */}
-          <div className="mb-8 flex flex-wrap items-center justify-center gap-6 lg:justify-start">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-primary">১০০০+</span>
-              <span className="text-sm text-foreground/60">শিক্ষার্থী</span>
+          {/* ===== ফিচার হাইলাইট ===== */}
+          <div className="mb-8 grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
+            <div className="flex items-center gap-3 rounded-xl border border-border bg-card/50 p-3 transition-all hover:border-primary/30 hover:shadow-md">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <MdFavorite className="size-5" />
+              </div>
+              <span className="text-sm font-medium text-foreground">একান্ত যত্নে পাঠদান</span>
             </div>
-            <div className="h-6 w-px bg-border"></div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-accent">৫০+</span>
-              <span className="text-sm text-foreground/60">কোর্স</span>
+
+            <div className="flex items-center gap-3 rounded-xl border border-border bg-card/50 p-3 transition-all hover:border-accent/30 hover:shadow-md">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <MdMenuBook className="size-5" />
+              </div>
+              <span className="text-sm font-medium text-foreground">সহজে কুরআন শিক্ষা</span>
             </div>
-            <div className="h-6 w-px bg-border"></div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-primary">১৫+</span>
-              <span className="text-sm text-foreground/60">বিশেষজ্ঞ শিক্ষক</span>
+
+            <div className="flex items-center gap-3 rounded-xl border border-border bg-card/50 p-3 transition-all hover:border-primary/30 hover:shadow-md">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <MdSchool className="size-5" />
+              </div>
+              <span className="text-sm font-medium text-foreground">অভিজ্ঞ শিক্ষক-শিক্ষিকা</span>
             </div>
           </div>
 
@@ -74,7 +83,7 @@ export function Hero() {
         <div className="relative flex w-full flex-1 items-center justify-center lg:justify-end">
           {/* ডেকোরেটিভ অ্যাম্বার গ্লো (ইমেজের পেছনে) */}
           <div className="absolute -bottom-10 -right-10 h-64 w-64 rounded-full bg-accent/10 blur-2xl dark:bg-accent/20" />
-          
+
           {/* ইমেজ কন্টেইনার */}
           <div className="relative z-10 w-full max-w-md rounded-2xl shadow-2xl shadow-primary/10 dark:shadow-primary/5">
             <div className="relative aspect-[4/4] w-full overflow-hidden rounded-2xl border border-border/50 bg-card">
@@ -86,7 +95,7 @@ export function Hero() {
                 priority
               />
             </div>
-            
+
             {/* ফ্লোটিং ডেকোরেশন (ইমেজের ওপর একটি ছোট সোনালি ফিতে) */}
             <div className="absolute -bottom-4 -left-4 z-20 rounded-lg bg-accent/90 px-4 py-2 shadow-lg backdrop-blur-sm dark:bg-accent">
               <p className="text-sm font-bold text-white">আল-কুরআন</p>

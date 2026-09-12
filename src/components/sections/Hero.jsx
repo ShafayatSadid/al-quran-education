@@ -39,9 +39,9 @@ export function Hero() {
             আপনার কুরআন শিক্ষার যাত্রা শুরু হোক আজই।
           </p>
 
-          {/* স্ট্যাটাস/পরিসংখ্যান */}
+          
           {/* ===== ফিচার হাইলাইট ===== */}
-          <div className="mb-8 grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
+          <div className="mb-8 hidden md:grid grid-cols-3 gap-3 lg:gap-4">
             <div className="flex items-center gap-3 rounded-xl border border-border bg-card/50 p-3 transition-all hover:border-primary/30 hover:shadow-md">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <MdFavorite className="size-5" />
